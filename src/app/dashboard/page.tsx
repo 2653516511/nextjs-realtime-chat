@@ -1,3 +1,4 @@
+import Button from "@/components/ui/Button";
 import { FC } from "react";
 
 interface pageProps {}

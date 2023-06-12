@@ -1,3 +1,4 @@
+import { fetchRedis } from "@/helpers/redis";
 import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { NextAuthOptions } from "next-auth";
 import gitHubProvider from "next-auth/providers/github";
@@ -36,12 +37,21 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // this way getting the user's information will get the cache information, instead the current user's
       const dbUser = (await db.get(`user:${token.id}`)) as User | null;
+      // const dbUserResult = (await fetchRedis("get", `user:${token.id}`)) as
+      //   | string
+      //   | null;
+      // const dbUserResult = (await fetchRedis('get', `user:${token.id}`)) as
+      //   | string
+      //   | null
 
       if (!dbUser) {
         token.id = user!.id;
         return token;
       }
+
+      // const dbUser = JSON.parse(dbUserResult);
 
       return {
         id: dbUser.id,

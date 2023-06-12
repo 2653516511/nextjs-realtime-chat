@@ -1,7 +1,7 @@
 import Button from "@/components/ui/Button";
 import { getServerSession } from "next-auth";
 import { FC } from "react";
-import { authOptions } from "@/app/lib/auth";
+import { authOptions } from "@/lib/auth";
 
 interface pageProps {}
 

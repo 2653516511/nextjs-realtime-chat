@@ -37,21 +37,18 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // this way getting the user's information will get the cache information, instead the current user's
-      const dbUser = (await db.get(`user:${token.id}`)) as User | null;
-      // const dbUserResult = (await fetchRedis("get", `user:${token.id}`)) as
-      //   | string
-      //   | null;
-      // const dbUserResult = (await fetchRedis('get', `user:${token.id}`)) as
-      //   | string
-      //   | null
+      // this way getting the user's information will get the cache information, instead of the current user's
+      // const dbUser = (await db.get(`user:${token.id}`)) as User | null;
+      const dbUserResult = (await fetchRedis("get", `user:${token.id}`)) as
+        | string
+        | null;
 
-      if (!dbUser) {
+      if (!dbUserResult) {
         token.id = user!.id;
         return token;
       }
 
-      // const dbUser = JSON.parse(dbUserResult);
+      const dbUser = JSON.parse(dbUserResult);
 
       return {
         id: dbUser.id,

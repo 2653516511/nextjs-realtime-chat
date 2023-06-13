@@ -27,6 +27,14 @@ const Page = async () => {
     })
   );
 
+  // fixme: mock friend request data
+  //   const incomingFriendRequests = [
+  //     {
+  //       senderId: "2",
+  //       senderEmail: "test@email.com",
+  //     },
+  //   ];
+
   return (
     <main className="pt-8">
       <h1 className="font-bold text-5xl mb-8">Add a friend</h1>

@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { email: emailToAdd } = addFriendValidator.parse(body.email);
+    const { email: emailToAdd } = addFriendValidator.parse(body.email);\
 
     const idToAdd = (await fetchRedis(
       "get",
@@ -57,6 +57,8 @@ export async function POST(req: Request) {
     db.sadd(`user:${idToAdd}:incomming_friend_requests`, session.user.id);
     return new Request("OK");
   } catch (error) {
+    console.log("----------add", error);
+
     if (error instanceof z.ZodError) {
       return new Response("Invalid request payload.", { status: 422 });
     }

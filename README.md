@@ -32,3 +32,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+1. Project setup
+    a. TailwindCSS
+    b. Core UI components(Button, toast)
+2. Database
+3. Authentication
+4. Sending friend requests
+5. Seeing friend requests
+6. Accepting friend requests
+7. Chatting with database persistence (not realtime yet)
+8. Adding all the realtime features
+9. Adding route protection
+10. Adding loading states

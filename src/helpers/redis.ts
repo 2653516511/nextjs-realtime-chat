@@ -16,7 +16,7 @@ export async function fetchRedis(
     cache: "no-store",
   });
 
-  console.log("-----------------------redis", response);
+  // console.log("-----------------------redis", response);
 
   if (!response.ok) {
     throw new Error(`Error executing Redis command: ${response.statusText}`);

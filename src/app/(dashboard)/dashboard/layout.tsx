@@ -1,5 +1,7 @@
 import FriendRequestSidebarOptions from "@/components/FriendRequestSidebarOptions";
 import { Icon, Icons } from "@/components/Icons";
+import SidebarChatList from "@/components/SidebarChatList";
+import { getFriendByUserId } from "@/helpers/get-friend-by-user-id";
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { Link } from "lucide-react";
@@ -26,14 +28,14 @@ const Layout = async ({ children }: LayoutProps) => {
   const session = await getServerSession(authOptions);
   if (!session) notFound();
 
-  // fixme: cause not have friend request, so there haven't imcoming request record in the upstash database.
-  const unseenRequestCount = 2;
-  // (
-  //   (await fetchRedis(
-  //     'smembers',
-  //     `user:${session.user.id}:incoming_friend_requests`
-  //   )) as User[]
-  // ).length;
+  const friends = await getFriendByUserId(session.user.id);
+
+  const unseenRequestCount = (
+    (await fetchRedis(
+      "smembers",
+      `user:${session.user.id}:incoming_friend_requests`
+    )) as User[]
+  ).length;
 
   return (
     <div className="w-full flex h-screen">
@@ -42,13 +44,17 @@ const Layout = async ({ children }: LayoutProps) => {
           <Icons.Logo className="h-8 w-auto text-indigo-600" />
         </Link>
 
-        <div className="text-xs font-semibold leading-6 text-gray-400">
-          Your chats
-        </div>
+        {friends.length > 0 ? (
+          <div className="text-xs font-semibold leading-6 text-gray-400">
+            Your chats
+          </div>
+        ) : null}
 
         <nav className="flex flex-1 flex-col">
           <ul role={"list"} className="flex flex-1 flex-col gap-y-7">
-            <li>// chats that this user has</li>
+            <li>
+              <SidebarChatList sessionId={session.user.id} friends={friends} />
+            </li>
             <li>
               <div className="text-xs font-semibold leading-6 text-gray-400">
                 Overview

@@ -18,7 +18,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatParner, chatId }) => {
 
   const sendMessage = async () => {
     if (!input) return;
-    
+
     try {
       setIsLoading(true);
       await axios.post("/api/message/send", {

@@ -13,20 +13,20 @@ interface ChatInputProps {
 
 const ChatInput: FC<ChatInputProps> = ({ chatParner, chatId }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [input, setInput] = useState<string>("");
+  const [inputMsg, setInputMsg] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendMessage = async () => {
-    if (!input) return;
+    if (!inputMsg) return;
+    setIsLoading(true);
 
     try {
-      setIsLoading(true);
       await axios.post("/api/message/send", {
-        text: input,
+        text: inputMsg,
         chatId,
       });
+      setInputMsg("");
       textareaRef.current?.focus();
-      setInput("");
     } catch {
       toast.error("Something went wrong. Please try again later.");
     } finally {
@@ -45,9 +45,9 @@ const ChatInput: FC<ChatInputProps> = ({ chatParner, chatId }) => {
               sendMessage();
             }
           }}
-          row={1}
-          valut={input}
-          onChange={(e) => setInput(e.target.value)}
+          rows={1}
+          value={inputMsg}
+          onChange={(e) => setInputMsg(e.target.value)}
           placeholder={`Message ${chatParner.name}`}
           className="block w-full resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6"
         />

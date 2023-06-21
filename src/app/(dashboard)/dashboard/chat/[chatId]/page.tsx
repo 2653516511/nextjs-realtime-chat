@@ -18,18 +18,20 @@ async function getChatMessages(chatId: string) {
   try {
     const results: string[] = await fetchRedis(
       "zrange",
-      `user:${chatId}:messages`,
+      `chat:${chatId}:messages`,
       0,
       -1
     );
-
     const dbMessages = results.map((result) => JSON.parse(result) as Message);
 
-    const revervedDbMessages = dbMessages.reverse();
+    // const revervedDbMessages = dbMessages.reverse();
+    const revervedDbMessages = dbMessages;
     const messages = messageArrayValidator.parse(revervedDbMessages);
 
     return messages;
-  } catch (error) {}
+  } catch (error) {
+    notFound();
+  }
 }
 
 const Page = async ({ params }: PageProps) => {
@@ -55,7 +57,7 @@ const Page = async ({ params }: PageProps) => {
   )) as string;
   const chatPartner = JSON.parse(chatPartnerRow) as User;
 
-  const initialMessages = await getChatMessages(chatId) as Message[];
+  const initialMessages = (await getChatMessages(chatId)) as Message[];
 
   return (
     <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]">
@@ -83,7 +85,11 @@ const Page = async ({ params }: PageProps) => {
           </div>
         </div>
       </div>
-      <Messages initialMessages={initialMessages} sessionId={session.user.id} />
+      <Messages
+        chatId={chatId}
+        initialMessages={initialMessages}
+        sessionId={session.user.id}
+      />
       <ChatInput chatParner={chatPartner} chatId={chatId} />
     </div>
   );

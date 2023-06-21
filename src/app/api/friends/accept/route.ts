@@ -1,12 +1,14 @@
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
+import { toPusherKey } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const body = req.json();
+    const body = await req.json();
 
     const { id: idToAdd } = z.object({ id: z.string() }).parse(body);
 
@@ -35,6 +37,17 @@ export async function POST(req: Request) {
     if (!hasFriendRequest) {
       return new Response("No friend request", { status: 400 });
     }
+
+    // pusherServer.trigger(
+    //   toPusherKey(`user:${idToAdd}:friends`),
+    //   'new_friends',
+    //   session.user
+    // )
+    // pusherServer.trigger(
+    //   toPusherKey(`user:${session.user.id}:friends`),
+    //   'new_friends',
+    //   session.user
+    // )
 
     // add new friend, don't need to consider cache data
     await db.sadd(`user:${session.user.id}:friends`, idToAdd);

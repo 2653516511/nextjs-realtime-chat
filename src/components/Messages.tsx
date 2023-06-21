@@ -1,17 +1,43 @@
 "use client";
 
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Message } from "@/lib/validations/message";
-import { cn } from "@/lib/utils";
+import { cn, toPusherKey } from "@/lib/utils";
+import { format } from "date-fns";
+import { pusherClient } from "@/lib/pusher";
 
 interface MessagesProps {
+  chatId: string;
   initialMessages: Message[];
   sessionId: string;
 }
 
-const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
+const Messages: FC<MessagesProps> = ({
+  chatId,
+  initialMessages,
+  sessionId,
+}) => {
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`chat:${chatId}`));
+
+    const messageHandler = (message: Message) => {
+      setMessages((prev) => [message, ...prev]);
+    };
+
+    pusherClient.bind("incoming_message", messageHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`));
+      pusherClient.unbind("incoming_message", messageHandler);
+    };
+  }, [chatId]);
+
+  const formatTimeStamp = (timestamp: number) => {
+    return format(timestamp, "HH:mm");
+  };
 
   return (
     <div
@@ -22,7 +48,7 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
         {messages.map((message, index) => {
           const isCurrentUser = sessionId === message.senderId;
           const hasNextMessageFromSameUser =
-            messages[index - 1].senderId === messages[index].senderId;
+            messages[index - 1]?.senderId === messages[index]?.senderId;
 
           return (
             <div
@@ -55,7 +81,7 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
                   >
                     {message.text}{" "}
                     <span className="ml-2 text-xs text-gray-400">
-                      {message.timestamp}
+                      {formatTimeStamp(message.timestamp)}
                     </span>
                   </span>
                 </div>

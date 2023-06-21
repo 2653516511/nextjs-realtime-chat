@@ -15,6 +15,9 @@ const Page = async () => {
     `user:${session.user.id}:incoming_friend_requests`
   )) as string[];
 
+  console.log('-------re', incomingSenderIds);
+  
+
   const incomingFriendRequests = await Promise.all(
     incomingSenderIds.map(async (senderId) => {
       const sender = (await fetchRedis("get", `user:${senderId}`)) as string;

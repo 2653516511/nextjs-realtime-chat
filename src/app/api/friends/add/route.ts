@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { email: emailToAdd } = addFriendValidator.parse(body.email);\
+    const { email: emailToAdd } = addFriendValidator.parse(body.email);
 
     const idToAdd = (await fetchRedis(
       "get",
@@ -54,8 +54,8 @@ export async function POST(req: Request) {
     }
 
     // valid request, send friend request
-    db.sadd(`user:${idToAdd}:incomming_friend_requests`, session.user.id);
-    return new Request("OK");
+    db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id);
+    return new Response("OK");
   } catch (error) {
     console.log("----------add", error);
 

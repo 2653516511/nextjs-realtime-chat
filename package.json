@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.15",
     "@hookform/resolvers": "^3.1.0",
     "@next-auth/upstash-redis-adapter": "^3.0.4",
     "@tailwindcss/forms": "^0.5.3",
@@ -33,6 +34,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.44.3",
     "react-hot-toast": "^2.4.1",
+    "react-loading-skeleton": "^3.3.1",
     "react-textarea-autosize": "^8.4.1",
     "tailwind-merge": "^1.13.0",
     "typescript": "5.1.3",

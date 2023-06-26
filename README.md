@@ -45,3 +45,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 8. Adding all the realtime features
 9. Adding route protection
 10. Adding loading states
+
+
+tools:
+pusher: https://dashboard.pusher.com/accounts/sign_in
+upstash: https://console.upstash.com/redis/58c26b6e-2fc8-4a3e-9d68-cd70951f99e2?tab=data-browser

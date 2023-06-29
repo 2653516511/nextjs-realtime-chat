@@ -1,14 +1,16 @@
+import { ReactNode } from "react";
 import FriendRequestSidebarOptions from "@/components/FriendRequestSidebarOptions";
 import { Icon, Icons } from "@/components/Icons";
 import MobileChatLayout from "@/components/MobileChatLayout";
 import SidebarChatList from "@/components/SidebarChatList";
+import SignOutButton from "@/components/SignOutButton";
 import { getFriendByUserId } from "@/helpers/get-friend-by-user-id";
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { Link } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
-import { ReactNode } from "react";
+import Image from "next/image";
 
 interface LayoutProps {
   children: ReactNode;
@@ -40,7 +42,7 @@ const Layout = async ({ children }: LayoutProps) => {
 
   return (
     <div className="w-full flex h-screen">
-      <div className='md:hidden'>
+      <div className="md:hidden">
         <MobileChatLayout
           friends={friends}
           session={session}
@@ -99,6 +101,30 @@ const Layout = async ({ children }: LayoutProps) => {
                   />
                 </li>
               </ul>
+            </li>
+
+            <li className="-mx-6 mt-auto flex items-center">
+              <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
+                <div className="relative h-8 w-8 bg-gray-50">
+                  <Image
+                    fill
+                    referrerPolicy="no-referrer"
+                    src={session.user.image || ""}
+                    alt={`your profile picutre`}
+                    className="rounded-full"
+                  />
+                </div>
+
+                <span className="sr-only">Your profile</span>
+                <div className="flex flex-col">
+                  <span aria-hidden="true">{session.user.name}</span>
+                  <span className="text-xs text-zinc-400" aria-hidden="true">
+                    {session.user.email}
+                  </span>
+                </div>
+              </div>
+
+              <SignOutButton className="h-full aspect-square" />
             </li>
           </ul>
         </nav>

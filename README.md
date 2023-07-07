@@ -34,8 +34,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 1. Project setup
-    a. TailwindCSS
-    b. Core UI components(Button, toast)
+   a. TailwindCSS
+   b. Core UI components(Button, toast)
 2. Database
 3. Authentication
 4. Sending friend requests
@@ -46,7 +46,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 9. Adding route protection
 10. Adding loading states
 
-
 tools:
-pusher: https://dashboard.pusher.com/accounts/sign_in
-upstash: https://console.upstash.com/redis/58c26b6e-2fc8-4a3e-9d68-cd70951f99e2?tab=data-browser
+    pusher: https://dashboard.pusher.com/accounts/sign_in
+    upstash: https://console.upstash.com/redis/58c26b6e-2fc8-4a3e-9d68-cd70951f99e2?tab=data-browser
+
+how to get github client id and client secret:
+    https://www.knowband.com/blog/user-manual/get-github-client-id-client-secret-api-details/

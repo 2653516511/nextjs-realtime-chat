@@ -5,17 +5,22 @@ import { Message } from "@/lib/validations/message";
 import { cn, toPusherKey } from "@/lib/utils";
 import { format } from "date-fns";
 import { pusherClient } from "@/lib/pusher";
+import Image from "next/image";
 
 interface MessagesProps {
   chatId: string;
   initialMessages: Message[];
   sessionId: string;
+  sessionImg: string | null | undefined;
+  partnerImg: string | null | undefined;
 }
 
 const Messages: FC<MessagesProps> = ({
   chatId,
   initialMessages,
   sessionId,
+  sessionImg,
+  partnerImg,
 }) => {
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
@@ -47,6 +52,7 @@ const Messages: FC<MessagesProps> = ({
       <div ref={scrollDownRef}>
         {messages.map((message, index) => {
           const isCurrentUser = sessionId === message.senderId;
+
           const hasNextMessageFromSameUser =
             messages[index - 1]?.senderId === messages[index]?.senderId;
 
@@ -84,6 +90,20 @@ const Messages: FC<MessagesProps> = ({
                       {formatTimeStamp(message.timestamp)}
                     </span>
                   </span>
+                </div>
+
+                <div>
+                  <Image
+                    fill
+                    src={
+                      isCurrentUser
+                        ? (sessionImg as string)
+                        : (partnerImg as string)
+                    }
+                    referrerPolicy="no-referrer"
+                    alt="profile picture"
+                    className="rounded-full"
+                  />
                 </div>
               </div>
             </div>

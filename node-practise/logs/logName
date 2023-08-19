@@ -1,9 +1,7 @@
-20230818	16:02:20	0a30967d-4940-48fe-879f-f27b32dd1b20	/old.html	GET
-20230818	16:02:23	e29629f2-7fe3-494b-bf42-6da6fea858b3	/old.html	GET
-20230818	16:02:57	7912fe63-d539-435f-9e1e-da602b7db22b	/old-page.html	GET
-20230818	16:04:40	80a5e7f9-df37-48a9-87ef-42433808c562	/old-page.html	GET
-20230818	16:04:40	51e4075e-995c-47ea-a2a5-8ea5b0d9a70d	Error: ENOENT: no such file or directory, open 'C:\deepFinance\practice\realtime-app-youtube\node-practise\views\old-page.html'
-20230818	16:05:44	8db1f6b7-5492-413c-8745-0c9e2c253ef7	/old-page.html	GET
-20230818	16:05:44	6aea5302-303b-4c74-a31b-93e1740be0e7	Error: ENOENT: no such file or directory, open 'C:\deepFinance\practice\realtime-app-youtube\node-practise\views\old-page.html'
-20230818	16:06:21	a1626e52-891b-4fca-a3e6-97cb69fd0db9	/new-page.html	GET
-20230818	16:06:22	f08c8fd1-7a25-4d06-baba-893c94d25137	TypeError: response.writeHeads is not a function
+20230819	16:43:36	fa68361f-715c-4553-abcb-d16ee577fba4	undefined	undefined
+20230819	16:44:33	1a33ff3d-1a97-4aa0-9bd2-913b690632a3	undefined	undefined
+20230819	16:45:05	97c69937-ac45-4e19-9cea-68f0f7530e85	undefined	undefined
+20230819	16:58:34	1d804cca-9e49-4d0b-9f01-952527b97ca3	undefined	undefined
+20230819	16:59:04	441b4e48-ee6d-47ee-8571-2628ae0c422d	undefined	undefined
+20230819	17:02:05	ffd327af-5d4f-41a0-bee6-dc871399d23b	undefined	undefined
+20230819	17:02:14	aceeedd9-0f5c-47c6-8686-191f079f9497	undefined	undefined

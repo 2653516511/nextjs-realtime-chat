@@ -1,15 +1,8 @@
-const fsPromises = require("fs").promises;
-const path = require("path");
+const User = require("../model/User");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
-const usersDB = {
-  users: require("../model/users.json"),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
 
 const handleLogin = async (req, res) => {
   const { user, pwd } = req.body;
@@ -19,7 +12,7 @@ const handleLogin = async (req, res) => {
     });
   }
 
-  const foundUser = usersDB.users.find((person) => person.username === user);
+  const foundUser = await User.findOne({ username: user }).exec();
   if (!foundUser) {
     return res.sendStatus("401"); // Unauthorized
   }
@@ -42,16 +35,10 @@ const handleLogin = async (req, res) => {
     );
 
     // Saving refreshToken with current user
-    const otherUsers = usersDB.users.filter(
-      (person) => person.username !== foundUser.username
-    );
-    const currentUser = { ...foundUser, refreshToken };
-    usersDB.setUsers([...otherUsers, currentUser]);
-
-    await fsPromises.writeFile(
-      path.join(__dirname, "..", "model", "users.json"),
-      JSON.stringify(usersDB.users)
-    );
+    foundUser.refreshToken = refreshToken;
+    const result = await foundUser.save();
+    console.log("-----login", result);
+    console.log("----roles", roles);
 
     // store refreshToken and accessToken respectively
     res.cookie("jwt", refreshToken, {

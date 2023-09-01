@@ -17,7 +17,7 @@ const createNewEmployee = async (req, res) => {
   if (!reqName?.firstname || !reqName?.secondname) {
     return res
       .status(400)
-      .json({ message: "First and scond names are required." });
+      .json({ message: "First and second names are required." });
   }
 
   try {

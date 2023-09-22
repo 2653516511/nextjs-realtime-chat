@@ -1,4 +1,4 @@
-// You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+// You're importing a component that needs useState. It only works in a Client Component, none of its parents are marked with "use client", so they're Server Components by default.
 "use client";
 
 import Button from "@/components/ui/Button";
